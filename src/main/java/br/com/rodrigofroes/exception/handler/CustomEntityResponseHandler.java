@@ -1,6 +1,7 @@
 package br.com.rodrigofroes.exception.handler;
 
 import br.com.rodrigofroes.exception.ExceptionResponse;
+import br.com.rodrigofroes.exception.ResourceNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -16,8 +17,8 @@ import java.util.Date;
 @RestController
 public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(UnsupportedOperationException.class)
-    public final ResponseEntity<ExceptionResponse> handleBadRequestExceptions(
+    @ExceptionHandler(ResourceNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> resourceNotFoundException(
             Exception ex,
             WebRequest request
     ) {
@@ -26,7 +27,7 @@ public class CustomEntityResponseHandler extends ResponseEntityExceptionHandler 
                 ex.getMessage(),
                 request.getDescription(false)
         );
-        return new ResponseEntity<>(exceptionResponse,HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(exceptionResponse,HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(Exception.class)
