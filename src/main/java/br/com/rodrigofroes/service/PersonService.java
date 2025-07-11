@@ -3,16 +3,17 @@ package br.com.rodrigofroes.service;
 import br.com.rodrigofroes.Repository.PersonRepository;
 import br.com.rodrigofroes.exception.ResourceNotFoundException;
 import br.com.rodrigofroes.models.Person;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.logging.Logger;
 
 @Service
 public class PersonService {
 
-    private Logger logger = Logger.getLogger(PersonService.class.getName());
+    private Logger logger = LoggerFactory.getLogger(PersonService.class.getName());
 
     @Autowired
     private PersonRepository personRepository;
@@ -27,7 +28,7 @@ public class PersonService {
 
         Person entity = this.personRepository.findById(person.getId())
                 .orElseThrow(() -> {
-                    logger.severe("Person not found with id: " + person.getId());
+                    logger.info("Person not found with id: " + person.getId());
                     return new ResourceNotFoundException("Person not found with id: " + person.getId());
                 });
 
@@ -49,7 +50,7 @@ public class PersonService {
         logger.info("Finding person by id: " + id);
         return this.personRepository.findById(id)
                 .orElseThrow(() -> {
-                    logger.severe("Person not found with id: " + id);
+                    logger.info("Person not found with id: " + id);
                     return new ResourceNotFoundException("Person not found with id: " + id);
                 });
     }
@@ -59,7 +60,7 @@ public class PersonService {
 
         Person entity = this.personRepository.findById(id)
                 .orElseThrow(() -> {
-                    logger.severe("Person not found with id: " + id);
+                    logger.info("Person not found with id: " + id);
                     return new ResourceNotFoundException("Person not found with id: " + id);
                 });
 
